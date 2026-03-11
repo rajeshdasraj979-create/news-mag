@@ -7,7 +7,8 @@ const NewsBoard = ({ category = "general" }) => {
   useEffect(() => {
     setLoading(true);
 
-    const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=dc83d880720247c6a8de9dc09628063c`;
+    // Use the Vercel serverless function instead of NewsAPI directly
+    const url = `/api/news?category=${category}`;
 
     fetch(url)
       .then((res) => res.json())
