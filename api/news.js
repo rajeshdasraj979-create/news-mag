@@ -1,7 +1,7 @@
 // api/news.js
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   const category = req.query.category || "general";
   const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=dc83d880720247c6a8de9dc09628063c`;
 
@@ -13,4 +13,4 @@ export default async function handler(req, res) {
     console.error(err);
     res.status(500).json({ articles: [] });
   }
-}
+};
