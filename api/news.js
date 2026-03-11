@@ -8,9 +8,24 @@ module.exports = async (req, res) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    res.status(200).json(data);
+
+    // If no articles returned, fallback to static news
+    const articles = (data.articles && data.articles.length > 0) ? data.articles : [
+      { title: "Static News 1", description: "This is fallback news 1", url: "#" },
+      { title: "Static News 2", description: "This is fallback news 2", url: "#" },
+      { title: "Static News 3", description: "This is fallback news 3", url: "#" },
+    ];
+
+    res.status(200).json({ articles });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ articles: [] });
+    // Fallback to static news on error
+    res.status(200).json({
+      articles: [
+        { title: "Static News 1", description: "This is fallback news 1", url: "#" },
+        { title: "Static News 2", description: "This is fallback news 2", url: "#" },
+        { title: "Static News 3", description: "This is fallback news 3", url: "#" },
+      ],
+    });
   }
 };
